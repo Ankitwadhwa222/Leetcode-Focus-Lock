@@ -1,0 +1,36 @@
+{
+  "name": "LeetCode Focus Lock",
+  "description": "Auto fullscreen, block distractions, and disable solutions tab on LeetCode.",
+  "version": "1.0",
+  "manifest_version": 3,
+  "permissions": [
+    "scripting",
+    "tabs",
+    "webRequest",
+    "storage"
+  ],
+  "host_permissions": [
+    "*://leetcode.com/*",
+    "*://*.youtube.com/*",
+    "*://*.stackoverflow.com/*",
+    "*://*.instagram.com/*",
+    "*://*.facebook.com/*",
+    "*://*.chat.openai.com/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["*://leetcode.com/problems/*"],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "icons": {
+    "128": "icon.png"
+  },
+  "action": {
+    "default_title": "LeetCode Focus Lock"
+  }
+}

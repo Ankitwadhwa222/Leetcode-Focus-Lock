@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>LeetCode Focus Lock</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+    }
+
+    #cheater-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: black;
+      color: red;
+      font-size: 2rem;
+      font-weight: bold;
+      text-align: center;
+      z-index: 9999;
+      justify-content: center;
+      align-items: center;
+      padding: 2rem;
+      flex-direction: column;
+    }
+  </style>
+</head>
+<body>
+  <div id="cheater-overlay">
+    🚫 You have reached your violations limit.<br />
+    You are a cheater.
+  </div>
+
+  <script>
+    let lastHiddenTime = null;
+    let totalAwayTime = 0;
+    let violations = 0;
+    const maxViolations = 3;
+    const cheaterOverlay = document.getElementById("cheater-overlay");
+
+    document.addEventListener("visibilitychange", () => {
+      if (document.hidden) {
+        lastHiddenTime = Date.now();
+      } else {
+        if (lastHiddenTime) {
+          const diff = Date.now() - lastHiddenTime;
+          totalAwayTime += diff;
+          violations++;
+
+          if (violations >= maxViolations) {
+            cheaterOverlay.style.display = "flex"; // Show blocking overlay
+            return;
+          }
+
+          alert(
+            `⚠️ You switched tabs!\nYou were away for ${(diff / 1000).toFixed(1)} seconds.\n` +
+            `Violations: ${violations} / ${maxViolations}`
+          );
+
+          lastHiddenTime = null;
+        }
+      }
+    });
+  </script>
+</body>
+</html>
